@@ -18,24 +18,17 @@ class GetSingleClassroomTest extends BaseTestCase
      */
     public function itReturnsSingleClassroom()
     {
-        $requestData = [
-            'title' =>  'New Title',
-            'isActive' => 0
-        ];
+        $classroom = $this->getClassroomRepository()->findOneBy(['title' => 'Classroom 1']);
 
-        $classroomId = $this->getClassroomRepository()->findOneBy(['title' => 'Classroom 1'])->getId();
-
-        $response = $this->jsonRequest('PUT', "/api/classrooms/$classroomId", $requestData);
+        $response = $this->jsonRequest('GET', "/api/classrooms/" . $classroom->getId());
 
         $this->assertEquals(200, $response->getStatusCode());
 
         $responseBody = json_decode($response->getContent(), true);
         $this->assertNotEmpty($responseBody['classroom']['id']);
         $this->assertNotEmpty($responseBody['classroom']['createdAt']);
-        $this->assertEquals($requestData['title'], $responseBody['classroom']['title']);
-        $this->assertEquals($requestData['isActive'], $responseBody['classroom']['isActive']);
-
-        $this->assertNotEmpty($this->getClassroomRepository()->findOneBy($requestData));
+        $this->assertEquals($classroom->getTitle(), $responseBody['classroom']['title']);
+        $this->assertEquals($classroom->isActive(), $responseBody['classroom']['isActive']);
     }
 
     /**

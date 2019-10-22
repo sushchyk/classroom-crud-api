@@ -49,7 +49,7 @@ class ClassroomController
     public function getItem(int $classroomId)
     {
         try {
-            $classroom = $this-$this->classroomManager->getClassroomById($classroomId);
+            $classroom = $this->classroomManager->getClassroomById($classroomId);
         }  catch (ClassroomNotFoundException $e) {
             return new JsonResponse(['errors' => [$e->getMessage()]], 404);
         }

@@ -26,7 +26,7 @@ services:
     depends_on:
       - mysql
     environment:
-      - COMPOSER_ALLOW_SUPERUSER=1
+      COMPOSER_ALLOW_SUPERUSER: 1
     networks:
       - php
       - mysql
